@@ -3,3 +3,7 @@ plan.txt
 /.idea/
 /__pycache__/
 /dump_img/
+steganos.spec
+/build/
+/dist/
+win_icon.ico

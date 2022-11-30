@@ -301,6 +301,19 @@ def get_char_data(pix3list:list) -> tuple[str, bool]:
     char = binary_utils.binary_to_text(char)
     return char, stop
 
+def resizer(img:Image.Image,max_size:int) -> Image.Image:
+    """
+    Takes the image and resizes it according the max_size provided while keeping the aspect ratio same as original image.
+
+    :param img: PIL.Image.Image
+    :param max_size: int
+    :return: PIL.Image.Image - Resized image
+    """
+    width,height = img.size
+    multiplier = max_size/max(width,height)
+    new_size = int(multiplier*width),int(multiplier*height)
+    return img.resize(new_size)
+
 def get_resized_dimensions(img:Image.Image,max_size:int) -> tuple[int]:
     """
     takes Image, returns the modified size tuple

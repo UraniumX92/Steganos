@@ -85,7 +85,7 @@ def open_image(textarea:Text,stego_img_path:StringVar):
     :return: None
     """
     data = textarea.get(1.0,END)
-    file = fd.askopenfile(title="Open image to extract text",initialdir=os.getcwd())
+    file = fd.askopenfile(title="Open image to extract text")
     if file:
         try:
             img = Image.open(file.name,'r')
@@ -151,19 +151,22 @@ def show_img(root:Tk,img_path:StringVar):
     if ipath:
         img = Image.open(ipath)
         w,h = img.size
-        w1,h1 = img_utils.get_resized_dimensions(img,max_size)
-        img = img.resize((w1,h1))
+        img = img_utils.resizer(img=img,max_size=max_size)
+        w1,h1 = img.size
         tkimg = ImageTk.PhotoImage(img)
         im_win = Toplevel(master=root)
-        im_win.title(f"Steganos - {ipath} - ({w}x{h})")
-        im_win.resizable(width=True, height=True)
-        im_win.wm_minsize(700,h1+100)
-        im_win.maxsize(1000,h1+200)
+        path_var = StringVar(value=f"{ipath} - ({w}x{h})")
+        im_win.title(f"Steganos - Image Preview")
+        im_win.resizable(width=False, height=False)
+        im_win.geometry(f"{750}x{h1+100}")
         im_win.geometry(f"700x{h1+100}")
         im_win.config(background='#2F3136')
         im_label = Label(master=im_win,image=tkimg,background='#2F3136')
+        im_path = Entry(master=im_win,textvariable=path_var,background='#2F3136',foreground='white',justify=CENTER,state='readonly',
+                        readonlybackground='#2F3136',borderwidth=0,selectbackground='black',width=120)
         im_label.photo = tkimg
-        im_label.pack(pady=50,padx=50,anchor=N)
+        im_label.pack(pady=10,padx=10,anchor=N)
+        im_path.pack(anchor=N)
         im_win.grab_set()
         im_win.focus_set()
     else:
@@ -171,7 +174,7 @@ def show_img(root:Tk,img_path:StringVar):
 
 
 def select_img(img_path:StringVar):
-    file = fd.askopenfile(title="Open image file",initialdir=os.getcwd())
+    file = fd.askopenfile(title="Open image file")
     if file:
         try:
             Image.open(file.name)
@@ -192,7 +195,7 @@ def get_file_data(textarea:Text):
     :return: None
     """
     try:
-        file = fd.askopenfile(title="Open file",initialdir=os.getcwd())
+        file = fd.askopenfile(title="Open file")
         if file:
             data = file.read()
             file.close()

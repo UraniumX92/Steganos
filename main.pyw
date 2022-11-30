@@ -47,6 +47,7 @@ root = Tk()
 root.geometry("1200x700")
 root.resizable(width=False,height=False)
 root.config(background=BACKGROUND)
+root.iconbitmap("icon.ico")
 root.title("Steganos : Application by Syed Usama")
 
 # Variables
